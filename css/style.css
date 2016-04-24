@@ -174,3 +174,12 @@ h4, .h4 {
     color: #fff;
     text-shadow: none;
 }
+
+.disqus_thread {
+    margin-top: 5px;
+    padding-top: 5px;
+    margin-left: 5px;
+    padding-left: 5px;
+    margin-right: 5px;
+    padding-right: 5px;
+}
