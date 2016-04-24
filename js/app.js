@@ -1,1 +1,7 @@
-angular.module('PollApp', ['googlechart', 'firebase']);
+angular
+    .module( 'PollApp',
+    [
+        'googlechart',
+        'firebase'
+    ]
+);

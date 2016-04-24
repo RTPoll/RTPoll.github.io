@@ -1,4 +1,5 @@
-angular.module( 'PollApp' )
+angular // Version: v3.2
+    .module( 'PollApp' )
     .controller( 'PollCtrl', function( $scope, $firebase )
     {
 
