@@ -1,0 +1,72 @@
+<div class="content">
+    <section id="content" ng-controller="PollCtrl">
+        <div class="container">
+            <h2>Poll</h2>
+
+            <div class="leftCol">
+                <div class="createPoll">
+                    <h3>Create a Poll</h3>
+
+                    <form>
+                        <fieldset class="form-group">
+                            <h4>Question</h4>
+                            <input type="text" class="form-control" ng-model="pollForm.name" placeholder="Question">
+
+                            <h4>Answers</h4>
+                            <div ng-repeat="option in pollForm.options track by $index">
+                                Option {{ $index + 1 }}
+                                <input type="text" class="form-control" placeholder="Answer" ng-model="pollForm.options[$index][0]">
+                                <button type="button" class="btn btn-danger" ng-click="removeOption($index)">-</button>
+                            </div>
+                            <button type="button" class="btn btn-primary" ng-click="addPollOption()">Add Answer</button>
+                            <button type="button" class="btn btn-warning" ng-click="resetForm()">Reset Form</button>
+                            <button type="button" class="btn btn-success" ng-click="pollCreate()">Create Poll</button>
+                        </fieldset>
+                    </form>
+
+                    <div class="selectPoll">
+                        <h3>Select an Existing Poll</h3>
+                        <div ng-show="load">
+                            Loading ...
+                        </div>
+                        <div ng-show="!load">
+                            <button ng-repeat="(key, value) in polls track by $index" ng-click="selectPoll(key)" type="button" class="btn btn-primary">
+                                {{ value.name }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="rightCol">
+                        <div ng-if="selectedPoll">
+                            <div google-chart chart="chart">
+                            </div>
+                            <form>
+                                <h3>Vote:</h3>
+                                <div>
+                                <span class="voteDiv" ng-repeat="data in selectedPollOptions">
+                                    <button type="button" class="btn btn-primary" ng-click="vote($index)">{{ data[0] }}</button>
+                                </span>
+                                </div>
+                                <div>
+                                    Other: <input ng-minlength="1" type="text" ng-model="vote.optionOther">
+                                    <button type="button" class="btn btn-success" ng-click="addOther()">Add and Vote</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--
+                        <div ng-controller="CommentCtrl">
+                            <form name="commentForm" ng-submit="commentForm.$valid && commentCtrl.addComment(post)" novalidate>
+                                <h3>Add Comment</h3>
+                                <textarea ng-model="commentCtrl.comment.body" cols="30" rows="10" required></textarea>
+                                <label for="">by:</label>
+                                <input type="text" ng-model="commentCtrl.comment.author" required placeholder="Name"/>
+                                <input type="submit" value="Submit" />
+                            </form>
+                        </div>-->
+    </section>
+</div>

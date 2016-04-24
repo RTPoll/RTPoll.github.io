@@ -1,0 +1,184 @@
+body {
+    background-color: #323232!important;
+    color: white!important;
+}
+
+#logo {
+    color: #3c763d;
+    font-size: 59px;
+    text-align: center;
+    text-decoration: none;
+    font-family: "Yuppy SC", sans-serif;
+    font-weight: bold;
+}
+
+#logo:hover {
+    text-decoration: none;
+}
+
+a, a:hover {
+    text-decoration: none;
+}
+
+#tagline {
+    text-align: center;
+    font-size: 13px;
+    margin: -10px auto 0;
+    padding: 0 10px 20px;
+    max-width: 1000px;
+    font-family: Noteworthy, sans-serif;
+}
+
+@media (min-width: 600px) {
+    #tagline {
+        margin: -20px auto 0;
+        font-size: 16px;
+    }
+}
+
+.container {
+    width: 99%
+}
+
+.chart {
+    height: 300px;
+    width: 500px;
+    border: 1px inset black;
+    padding: 5px;
+    margin-top: 4px;
+}
+
+.btn {
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    padding: 25px 80px;
+    display: inline-block;
+    margin: 3px 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.btn:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.btn-1 {
+    border: 3px solid #fff;
+    color: #fff;
+    background: black;
+}
+
+.btn-1a:hover,
+.btn-1a:active {
+    color: #0e83cd;
+    background: #fff;
+}
+
+.createPoll {
+    background-color: #0e83cd;
+    width: 100%;
+    max-width: 660px;
+    box-shadow: 2px 3px 7px rgba(0,0,0,0.7);
+}
+
+@media (min-width: 1020px) {
+    .createPoll {
+        margin: 0 auto auto 0;
+    }
+}
+
+@media (min-width: 600px) {
+    .createPoll {
+        background-position: 0 0;
+    }
+}
+
+.input-group-btn {
+    font-size: 14px!important;
+    margin-top: -1px;
+}
+
+
+#question {
+    width: 50%!important;
+    margin-left: 4px!important;
+}
+
+#answer {
+    margin-left: 4px;
+}
+
+@media (min-width: 768px) {
+    .form-inline .form-control {
+        vertical-align: top !important;
+        margin-top: 1px;
+    }
+}
+
+.form-inline .form-control {
+    width: auto;
+    display: inline-block;
+}
+
+.existingPoll {
+    margin-top: 2px;
+    padding-top: 4px;
+}
+
+.pollSelectBtn {
+    width:120px;
+    height:30px;
+    overflow: hidden;
+    float: left;
+}
+
+.voteDiv {
+    margin: 0 3px;
+}
+
+#addOther {
+    width: 20%;
+}
+
+.fa-trash {
+    color: red;
+    margin-top: 3px;
+}
+
+.btn-primary {
+    margin-bottom: 2px!important;
+}
+
+h4, .h4 {
+    font-size: 18px;
+    margin-left: 4px!important;
+}
+
+.form-control {
+    display: inline!important;
+}
+
+#addVote {
+    margin-top: -2px!important;
+}
+
+::selection {
+    background: #2CA842;
+    color: #fff;
+    text-shadow: none;
+}
