@@ -12,14 +12,6 @@ body {
     font-weight: bold;
 }
 
-#logo:hover {
-    text-decoration: none;
-}
-
-a, a:hover {
-    text-decoration: none;
-}
-
 #tagline {
     text-align: center;
     font-size: 13px;
