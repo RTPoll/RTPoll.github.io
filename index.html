@@ -1,4 +1,4 @@
-<!DOCTYPE html><!-- Version: v1.2 -->
+<!DOCTYPE html><!-- Version: v1.5 -->
 <html ng-app="PollApp">
 
     <head>
@@ -13,7 +13,6 @@
         <!-- Font Awesome CSS CDN -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" type="text/css" rel="stylesheet">
     </head>
-
 
     <!-- Real Time Poll -->
     <body>
@@ -35,12 +34,12 @@
                                     <h4>Answers</h4>
                                     <div ng-repeat="option in pollForm.options track by $index" class="form-inline" id="answer">
                                         Option {{ $index + 1 }}
-                                        <input type="text" class="form-control" placeholder="Answer" ng-model="pollForm.options[$index][0]">
+                                        <input type="text" placeholder="Answer" class="form-control" ng-model="pollForm.options[$index][0]">
                                         <i class="fa fa-trash fa-2x" ng-click="removeOption($index)"></i>
                                     </div>
-                                    <button type="button" class="btn btn-primary" ng-click="addPollOption()">Add Answer</button>
-                                    <button type="button" class="btn btn-warning" ng-click="resetForm()">Reset Form</button>
-                                    <button type="button" class="btn btn-success" ng-click="pollCreate()">Create Poll</button>
+                                    <button class="btn btn-primary" type="button" ng-click="addPollOption()">Add Answer</button>
+                                    <button class="btn btn-warning" type="button" ng-click="resetForm()">Reset Form</button>
+                                    <button class="btn btn-success" type="button" ng-click="pollCreate()">Create Poll</button>
                                 </fieldset>
                             </form>
 
@@ -51,9 +50,7 @@
                             <h3>Select an Existing Poll</h3>
                             <div ng-show="load"> Loading ... </div>
                             <div ng-show="!load">
-                                <button ng-repeat="(key, value) in polls track by $index" ng-click="selectPoll(key)" type="button" class="existingPoll btn btn-primary">
-                                    {{ value.name }}
-                                </button>
+                                <button ng-repeat="(key, value) in polls track by $index" type="button" ng-click="selectPoll(key)" class="existingPoll btn btn-primary"> {{ value.name }} </button>
                             </div>
                         </div>
 
@@ -65,13 +62,13 @@
                                 <form>
                                     <h3>Vote:</h3>
                                     <div>
-                                        <span class="voteDiv" ng-repeat="data in selectedPollOptions">
-                                            <button type="button" class="btn btn-primary" ng-click="vote($index)">{{ data[0] }}</button>
+                                        <span ng-repeat="data in selectedPollOptions" class="voteDiv">
+                                            <button class="btn btn-primary" type="button" ng-click="vote($index)">{{ data[0] }}</button>
                                         </span>
                                     </div>
                                     <div>
-                                        Other: <input ng-minlength="1" class="form-control form-inline" id="addOther" type="text" ng-model="vote.optionOther">
-                                        <button type="button" class="btn btn-success" id="addVote" ng-click="addOther()">Add and Vote</button>
+                                        Other: <input id="addOther" ng-minlength="1" class="form-control form-inline" type="text" ng-model="vote.optionOther">
+                                        <button class="btn btn-success" id="addVote" type="button" ng-click="addOther()">Add and Vote</button>
                                     </div>
                                 </form>
                             </div>
@@ -85,9 +82,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
 
-        <!-- Local JS Files -->
-        <script src="js/lib/angular-route.js"></script>
-        <script src="js/lib/angular-resource.js"></script>
+        <!-- Angular JS CDNs -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-resource.js"></script>
 
         <!-- Firebase and FngularFire CDNs -->
         <script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
