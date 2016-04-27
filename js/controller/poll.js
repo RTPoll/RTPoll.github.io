@@ -1,10 +1,10 @@
-angular // Version: v3.3
+angular
     .module( 'PollApp' )
     .controller( 'PollCtrl', function( $scope, $firebase )
     {
 
         // Firebase Address.
-        var firebaseAddress = new Firebase( "https://shining-heat-6023.firebaseio.com/RealTimePolls/" );
+        var firebaseAddress = new Firebase( "https://shining-heat-6023.firebaseio.com/Poll/" );
 
         // Automatically syncs everywhere in real-time.
         $scope.polls = $firebase( firebaseAddress );
