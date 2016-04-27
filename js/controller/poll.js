@@ -1,18 +1,18 @@
 angular
-    .module( 'PollApp' )
-    .controller( 'PollCtrl', function( $scope, $firebase )
+    .module ( 'PollApp' )
+    .controller ( 'PollCtrl', function ( $scope, $firebase )
     {
 
         // Firebase Address.
-        var firebaseAddress = new Firebase( "https://shining-heat-6023.firebaseio.com/Poll" );
+        var firebaseAddress = new Firebase ( "https://shining-heat-6023.firebaseio.com/Poll" );
 
         // Automatically syncs everywhere in real-time.
-        $scope.polls = $firebase( firebaseAddress );
+        $scope.firebasePolls = $firebase ( firebaseAddress );
 
         // Create basic objects.
-        $scope.selectedPoll = '';
-        $scope.selectedPollOptions = [];
-        $scope.load = true;
+        $scope.userSelectedPoll = '';
+        $scope.userSelectedPollOptions = [];
+        $scope.hasLoaded = true;
 
         /**
          * Select Poll
@@ -29,40 +29,40 @@ angular
          * **/
 
         // Loading poll from the list (into the Firebase object).
-        $scope.selectPoll = function ( id )
+        $scope.selectPoll = function ( firebasePollID )
         {
             // Doesn't run on initial watch.
-            if ( id )
+            if ( firebasePollID )
             {
-                // Holds selected Polls ID.
-                $scope.selectedPoll = id;
-
-                // Clean poll options object.
-                $scope.selectedPollOptions = [];
-
                 // Clean Google Chart data.
                 pieChart.data = [];
 
+                // Holds selected Polls ID.
+                $scope.userSelectedPoll = firebasePollID;
+
+                // Clean poll options object.
+                $scope.userSelectedPollOptions = [];
+
                 // Populate the chart's title from the Firebase object.
-                pieChart.options.title = $scope.polls[id].name;
+                pieChart.options.title = $scope.firebasePolls[firebasePollID].name;
 
                 // Google Chart requires that the column name is first in the dataset row - this saves us pain in the long run later on.
-                pieChart.data.push( ['option', 'value'] );
+                pieChart.data.push ( ['option', 'value'] );
 
                 // Populate 'chart.data' with values from the Firebase - don't forget to paseInt the values, or it will not draw the chart.
-                for ( i = 0; i < $scope.polls[id].options.length; i++ )
+                for ( interger = 0; interger < $scope.firebasePolls[firebasePollID].options.length; interger++ )
                 {
-                    if ( $scope.polls[id].options[i][0] && $scope.polls[id].options[i][1] )
+                    if ( $scope.firebasePolls[firebasePollID].options[interger][0] && $scope.firebasePolls[firebasePollID].options[interger][1] )
                     {
                         // Resets the value if you do not have a numeric value.
-                        var val = parseInt( $scope.polls[id].options[i][1] );
-                        var option = [$scope.polls[id].options[i][0], val];
+                        var dataValue = parseInt ( $scope.firebasePolls[firebasePollID].options[interger][1] );
+                        var userSelectedOption = [$scope.firebasePolls[firebasePollID].options[interger][0], dataValue];
 
                         // Push data from the Firebase object to the Chart data object.
-                        pieChart.data.push( option );
+                        pieChart.data.push ( userSelectedOption );
 
                         // Push the options from the Firebase Object to the Poll Options object.
-                        $scope.selectedPollOptions.push( $scope.polls[id].options[i] );
+                        $scope.userSelectedPollOptions.push ( $scope.firebasePolls[firebasePollID].options[interger] );
                     }
                 }
                 $scope.chart = pieChart;
@@ -70,15 +70,15 @@ angular
         };
 
         // Deep watch for the Firebase object - allows the chart to update in real-time.
-        $scope.$watch( 'polls', function ()
+        $scope.$watch ( 'firebasePolls', function ()
         {
-            $scope.selectPoll( $scope.selectedPoll );
-        }, true);
+            $scope.selectPoll ( $scope.userSelectedPoll );
+        }, true );
 
         // Data loaded from Firebase object - used to switch off the loader.
-        $scope.polls.$on( "loaded", function ()
+        $scope.firebasePolls.$on ( "loaded", function ()
         {
-            $scope.load = false;
+            $scope.hasLoaded = false;
         });
 
         // Vote on the Poll
@@ -89,22 +89,23 @@ angular
             index ++;
 
             // Adds +1 to the index to compensate for the first row of the Chart data not being poll options.
-            if ( angular.isNumber( pieChart.data[index][1] ))
+            if ( angular.isNumber ( pieChart.data[index][1] ) )
             {
-                newTotal = parseInt( pieChart.data[index][1] ) + 1;
+                newTotal = parseInt ( pieChart.data[index][1] ) + 1;
             }
-            else {
-                newTotal = 1
+            else
+            {
+                newTotal = 1;
             }
 
             // Moves the index back one.
             index--;
 
             // Update the values in the Firebase object.
-            $scope.polls[$scope.selectedPoll].options[index][1] = newTotal;
+            $scope.firebasePolls[$scope.userSelectedPoll].options[index][1] = newTotal;
 
             // Saves changes to the object and to the remote Firebase database.
-            $scope.polls.$save();
+            $scope.firebasePolls.$save ();
         };
 
         // Adds "other" option to the selected poll.
@@ -113,10 +114,10 @@ angular
             if ( $scope.vote.optionOther )
             {
                 // Adds new options to the Firebase object with a single save.
-                $scope.polls[$scope.selectedPoll].options.push ( [$scope.vote.optionOther, 1] );
+                $scope.firebasePolls[$scope.userSelectedPoll].options.push ( [$scope.vote.optionOther, 1] );
 
                 // Save the Firebase object - this updates the Firebase database.
-                $scope.polls.$save();
+                $scope.firebasePolls.$save ();
 
                 // Clears the "other" form field.
                 $scope.vote.optionOther = '';
@@ -133,6 +134,7 @@ angular
         // Pie Chart
         var pieChart = {};
         pieChart.type = "PieChart";
+
         // Source: https://developers.google.com/chart/interactive/docs/gallery/piechart
         pieChart.options = {
             title: '',
@@ -166,6 +168,7 @@ angular
         // Bar Chart
         var barChart = {};
         barChart.type = "BarChart";
+
         // Source: https://developers.google.com/chart/interactive/docs/gallery/barchart#stacked-bar-charts
         barChart.options = {
             title: '',
@@ -195,23 +198,23 @@ angular
         // Reset the form
         $scope.resetForm = function ()
         {
-            $scope.pollForm = {};
-            $scope.pollForm.options = [];
+            $scope.firebaseFormPoll = {};
+            $scope.firebaseFormPoll.options = [];
         };
 
         // Call one reset on load for object declaration
-        $scope.resetForm();
+        $scope.resetForm ();
 
         // Add a poll option to the creation form
         $scope.addPollOption = function ()
         {
-            $scope.pollForm.options.push( ['', '0'] );
+            $scope.firebaseFormPoll.options.push ( ['', '0'] );
         };
 
         // Remove poll option from the form
         $scope.removeOption = function ( index )
         {
-            $scope.pollForm.options.splice( index, 1 );
+            $scope.firebaseFormPoll.options.splice ( index, 1 );
         };
 
         // Create a new poll
@@ -220,21 +223,23 @@ angular
             // Add a poll to the Firebase object - this will in turn, update at to the server.
 
             // Checks for empty options.
-            for ( i = 0; i < $scope.pollForm.options.length; i++ )
+            for ( interger = 0; interger < $scope.firebaseFormPoll.options.length; interger++ )
             {
                 // Makes sure there are no empty options.
-                if ( angular.isUndefined($scope.pollForm.options[i][0]) || $scope.pollForm.options[i][0]=='' )
+                if ( angular.isUndefined ( $scope.firebaseFormPoll.options[interger][0] ) || $scope.firebaseFormPoll.options[interger][0] == '' )
                 {
-                    $scope.pollForm.options.splice( i, 1 )
+                    $scope.firebaseFormPoll.options.splice( interger, 1 )
                 }
             }
-            if ( $scope.pollForm.name && ( $scope.pollForm.options.length>0 ))
+
+            if ( $scope.firebaseFormPoll.name && ( $scope.firebaseFormPoll.options.length > 0 ) )
             {
                 // Adds the new form to the Firebase object - updates automatically in the Firebase database.
-                $scope.polls.$add($scope.pollForm);
+                $scope.firebasePolls.$add ( $scope.firebaseFormPoll );
 
                 // Resets the poll creation form.
-                $scope.resetForm();
+                $scope.resetForm ();
             }
         };
-    });
+    }
+);

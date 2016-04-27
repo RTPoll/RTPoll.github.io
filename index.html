@@ -7,8 +7,8 @@
         <meta charset="utf-8">
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
+        <link href="favicon.ico" type="image/x-icon" rel="icon">
 
         <!-- App CSS -->
         <link href="css/style.css" type="text/css" rel="stylesheet">
@@ -30,20 +30,19 @@
                         <div class="col-md-6">
 
                             <!-- Create Poll Form -->
-                            <form id="createPoll">
+                            <form id="pollCreate">
                                 <fieldset class="form-group">
                                     <h4>Question</h4>
-                                    <input type="text" id="question" class="form-control" ng-model="pollForm.name" placeholder="Type your question here">
+                                    <input type="text" id="question" class="form-control" ng-model="firebaseFormPoll.name" placeholder="Type your question here">
 
                                     <h4>Answers</h4>
-                                    <div ng-repeat="option in pollForm.options track by $index" class="form-inline" id="answer">
-                                        Option {{ $index + 1 }}
-                                        <input type="text" placeholder="Answer" class="form-control" ng-model="pollForm.options[$index][0]">
+                                    <div ng-repeat="userSelectedOption in firebaseFormPoll.options track by $index" class="form-inline" id="answer"> Option {{ $index + 1 }}
+                                        <input type="text" placeholder="Answer" class="form-control" ng-model="firebaseFormPoll.options[$index][0]">
                                         <i class="fa fa-trash fa-2x" ng-click="removeOption($index)"></i>
                                     </div>
-                                    <button class="btn btn-primary" type="button" ng-click="addPollOption()">Add Answer</button>
-                                    <button class="btn btn-warning" type="button" ng-click="resetForm()">Reset Form</button>
-                                    <button class="btn btn-success" type="button" ng-click="pollCreate()">Create Poll</button>
+                                    <button class="btn btn-primary" type="button" ng-click="addPollOption ()">Add Answer</button>
+                                    <button class="btn btn-warning" type="button" ng-click="resetForm ()">Reset Form</button>
+                                    <button class="btn btn-success" type="button" ng-click="pollCreate ()">Create Poll</button>
                                 </fieldset>
                             </form>
 
@@ -54,25 +53,26 @@
                             <h3>Select an Existing Poll</h3>
                             <div ng-show="load"> Loading ... </div>
                             <div ng-show="!load">
-                                <button ng-repeat="(key, value) in polls track by $index" type="button" ng-click="selectPoll(key)" class="existingPoll btn btn-primary"> {{ value.name }} </button>
+                                <button ng-repeat="(key, value) in firebasePolls track by $index" ng-click="selectPoll (key)" class="existingPoll btn btn-primary" type="button"> {{ value.name }} </button>
                             </div>
                         </div>
 
                         <!-- Display selected poll -->
                         <div class="col-md-6" id="chart">
-                            <div ng-if="selectedPoll">
+                            <div ng-if="userSelectedPoll">
                                 <div google-chart chart="chart"></div>
 
                                 <form>
                                     <h3>Vote:</h3>
                                     <div>
-                                        <span ng-repeat="data in selectedPollOptions" class="voteDiv">
-                                            <button class="btn btn-primary" type="button" ng-click="vote($index)">{{ data[0] }}</button>
+                                        <span ng-repeat="data in userSelectedPollOptions" class="voteDiv">
+                                            <button class="btn btn-primary" type="button" ng-click="vote ($index)">{{ data[0] }}</button>
                                         </span>
                                     </div>
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>
@@ -90,7 +90,7 @@
         <script src="//cdn.firebase.com/js/client/1.0.6/firebase.js" type="text/javascript"></script>
         <script src="//cdn.firebase.com/libs/angularfire/0.7.0/angularfire.min.js" type="text/javascript"></script>
 
-        <!-- Main App JS -->
+        <!-- Main Application JS -->
         <script src="js/app.js" type="text/javascript"></script>
         <script src="js/controller/poll.js" type="text/javascript"></script>
 
