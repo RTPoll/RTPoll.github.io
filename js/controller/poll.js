@@ -4,7 +4,7 @@ angular
     {
 
         // Firebase Address.
-        var firebaseAddress = new Firebase( "https://shining-heat-6023.firebaseio.com/Poll/" );
+        var firebaseAddress = new Firebase( "https://shining-heat-6023.firebaseio.com/Poll" );
 
         // Automatically syncs everywhere in real-time.
         $scope.polls = $firebase( firebaseAddress );
