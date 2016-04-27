@@ -230,7 +230,7 @@ angular // Version: v3.3
             }
             if ( $scope.pollForm.name && ( $scope.pollForm.options.length>0 ))
             {
-                // Adds the new form to the Firebae object - updates automatically in the Firebase database.
+                // Adds the new form to the Firebase object - updates automatically in the Firebase database.
                 $scope.polls.$add($scope.pollForm);
 
                 // Resets the poll creation form.
